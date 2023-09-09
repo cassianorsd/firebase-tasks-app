@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "firetask-f0935"
-  }
+  },
+  "targets": {
+    "firetask-f0935": {
+      "hosting": {
+        "app": [
+          "firetask-scy"
+        ],
+        "dev": [
+          "firetask-f0935"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
