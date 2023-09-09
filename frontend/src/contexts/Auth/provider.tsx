@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { AuthContext } from "./context";
 import { PROVIDERS_IDS, auth, firestore, getProvider } from "../../config/firebase";
-import { User, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { User, signInWithPopup } from "firebase/auth";
 import { useEffect } from "react";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
