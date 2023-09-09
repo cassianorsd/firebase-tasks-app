@@ -21,7 +21,7 @@ export function UsersBox() {
           <UsersPanel isOpen={showPanel}>
             {users?.docs.map((user) => (
               <li key={user.id}>
-                <Avatar online={user.data().online}>
+                <Avatar online={user.data().lastOnline ? user.data().lastOnline.toDate() > new Date(Date.now() - 1 * 60 * 1000) : false }>
                   <img src={user.data().avatarUrl} alt="" />
                 </Avatar>
                 {user.data().name}

@@ -16,36 +16,36 @@ export function AuthContextProvider({children}:AuthContextProviderProps) {
 
   const [user,loading] = useAuthState(auth);
 
+  const pingUser = async (user:User) => {
+    const userRef = doc(firestore, 'users', user.uid)
+    const userSnap = await getDoc(userRef)
+    if(!userSnap.exists()){
+      await setDoc(doc(firestore, 'users',user.uid),{
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        avatarUrl: user.photoURL,
+        lastOnline: new Date(),
+      })
+    } else {
+      await updateDoc(userRef,{
+        lastOnline: new Date(),
+      })
+    }
+  }
 
   useEffect(()=>{
-
-    async function updateUser(user:User){
-      const userRef = doc(firestore, 'users', user.uid)
-      const userSnap = await getDoc(userRef)
-      if(!userSnap.exists()){
-        await setDoc(doc(firestore, 'users',user.uid),{
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-          avatarUrl: user.photoURL,
-          online: true
-        })
-      } else {
-        await updateDoc(userRef,{
-          online: true
-        })
-      }
+    let pingInterval:NodeJS.Timeout;
+    if(user){
+      pingUser(user)
+      pingInterval = setInterval(()=>{
+        pingUser(user)
+      }, 60 * 1000)
     }
-
-    const unsubscribe = onAuthStateChanged(auth,(currentUser)=>{
-      if(currentUser){
-        updateUser(currentUser)
-      }
-    })
     return () => {
-      unsubscribe()
+      if(pingInterval) clearInterval(pingInterval)
     }
-  },[])
+  },[user])
 
   const signIn = async () => {
     const user = await signInWithPopup(auth, getProvider(PROVIDERS_IDS.GOOGLE));
