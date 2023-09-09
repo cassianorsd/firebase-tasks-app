@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting on merge
+name: Deploy to Firebase Hosting and GitHub Pages
 'on':
   push:
     branches:
@@ -20,3 +20,8 @@ jobs:
           channelId: live
           projectId: firetask-f0935
           # target: app
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/dist

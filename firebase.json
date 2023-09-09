@@ -45,28 +45,6 @@
           "destination": "/index.html"
         }
       ]
-    },
-    {
-      "site": "react-auth-b8912",
-      "public": "frontend/dist",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ],
-      "redirects": [
-        {
-          "source": "*",
-          "destination": "https://firetask-scy.web.app",
-          "type": 307
-        }
-      ]
     }
   ],
   "emulators": {
